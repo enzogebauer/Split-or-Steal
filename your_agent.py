@@ -13,11 +13,11 @@ class SmartRLAgent:
         self.Q = defaultdict(lambda: [0.0, 0.0])
         self.action_list = ["split", "steal"]
         self.last_opponent_actions = deque(
-            [0, 0], maxlen=2
-        )  # histórico das 2 últimas ações do oponente
+            [0, 0], maxlen=3
+        )  # histórico das últimas ações do oponente
         self.last_your_actions = deque(
-            [0, 0], maxlen=2
-        )  # histórico das 2 últimas suas ações
+            [0, 0], maxlen=3
+        )  # histórico das últimas ações do agente
         self.last_round = False
         self.current_input = None
         self.current_output = None
@@ -27,7 +27,6 @@ class SmartRLAgent:
         return "SmartRL+"
 
     def discretize_amount(self, amount):
-        # Discretiza o valor do prêmio em 3 faixas: baixo, médio, alto
         if amount < 80:
             return 0
         elif amount < 120:
@@ -111,5 +110,5 @@ class SmartRLAgent:
         self.current_output = (your_action, his_action, total_possible, reward)
         # Zera histórico se for última rodada
         if self.current_input and self.current_input[1] == 0:
-            self.last_opponent_actions = deque([0, 0], maxlen=2)
-            self.last_your_actions = deque([0, 0], maxlen=2)
+            self.last_opponent_actions = deque([0, 0], maxlen=3)
+            self.last_your_actions = deque([0, 0], maxlen=3)
